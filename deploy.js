@@ -1,4 +1,4 @@
-// this is based on project riot-express-todo-list
+// this is based on project riot-express-todo-list but hackathon-starter is used in the code below
 // ec2-3-84-88-235.compute-1.amazonaws.com:8080
 var cmd = require('node-cmd');
 var path, node_ssh, ssh, fs;
@@ -25,7 +25,7 @@ function installPM2() {
 function transferProjectToRemote(failed, successful) {
   return ssh.putDirectory(
     '../riot-express-todo-list',
-    '/home/ubuntu/riot-express-todo-list',
+    '/home/ubuntu/riot-express-todo-list-temp',
     {
       recursive: true,
       concurrency: 1,
@@ -51,7 +51,7 @@ function transferProjectToRemote(failed, successful) {
 // creates a temporary folder on the remote server
 function createRemoteTempFolder() {
   return ssh.execCommand(
-    'rm -rf riot-express-todo-list && mkdir riot-express-todo-list', {
+    'rm -rf riot-express-todo-list-temp && mkdir riot-express-todo-list-temp', {
       cwd: '/home/ubuntu'
   });
 }
@@ -67,7 +67,7 @@ function stopRemoteServices() {
 // updates the project source on the server
 function updateRemoteApp() {
   return ssh.execCommand(
-    'cp -r riot-express-todo-list/* riot-express-todo-list/ && rm -rf riot-express-todo-list', {
+    'cp -r riot-express-todo-list-temp/* riot-express-todo-list/ && rm -rf riot-express-todo-list-temp', {
       cwd: '/home/ubuntu'
   });
 }
@@ -97,7 +97,7 @@ function sshConnect() {
       return installPM2();
     })
     .then(function() {
-      console.log('Creating `riot-express-todo-list` folder.');
+      console.log('Creating `riot-express-todo-list-temp` folder.');
       return createRemoteTempFolder();
     })
     .then(function(result) {
