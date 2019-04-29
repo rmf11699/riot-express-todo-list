@@ -1,5 +1,3 @@
-// this is based on project riot-express-todo-list but hackathon-starter is used in the code below
-// ec2-3-84-88-235.compute-1.amazonaws.com:8080
 var cmd = require('node-cmd');
 var path, node_ssh, ssh, fs;
 fs = require('fs');
@@ -87,7 +85,7 @@ function sshConnect() {
   ssh
     .connect({
       // TODO: ADD YOUR IP ADDRESS BELOW (e.g. '12.34.5.67')
-      host: '3.84.88.235',
+      host: '34.226.216.220',
       username: 'ubuntu',
       privateKey: 'todo-list.pem'
     })
